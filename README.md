@@ -1,15 +1,15 @@
 # Project 6 – Full Observability & Security Solution
 
-## 📌 Overview
+## Overview
 
 This project demonstrates a complete observability and security stack for a containerized web application, integrated with Prometheus, Grafana, and AWS Services.
 
-## 🚀 Quick Start
+##  Quick Start
 
 1. Clone the repository:
 	```bash
-	git clone <repo-url>
-	cd observability
+	git clone https://github.com/viateur-amalitech/Full-Observability-Security-Solution.git
+	cd Full-Observability-Security-Solution
 	```
 2. Provision infrastructure:
 	```bash
@@ -29,14 +29,14 @@ This project demonstrates a complete observability and security stack for a cont
 
 For full setup, CI/CD, and AWS integration, see [docs/runbook.md](./docs/runbook.md).
 
-## 📖 Documentation
+## Documentation
 
 - [Runbook & Setup Guide](./docs/runbook.md)
 - [Implementation Report](./docs/REPORT.md)
 - [Screenshots](./docs/screenshots/)
 
 
-## 🚀 Key Implementations
+## Key Implementations
 
 - **Metrics**: Exposed at `/metrics` using `prom-client` in the Node.js application.
 - **Monitoring**: Prometheus scraping app and Node Exporter metrics.
@@ -46,7 +46,7 @@ For full setup, CI/CD, and AWS integration, see [docs/runbook.md](./docs/runbook
 - **Security**: AWS CloudTrail (activity auditing) and AWS GuardDuty (threat detection) enabled.
 - **Compliance**: CloudTrail logs stored in encrypted S3 buckets with lifecycle policies.
 
-## 📁 Repository Structure
+## Repository Structure
 
 - **[app/](./app/)**: Node.js source code, tests, and Dockerfile.
 - **[infra/](./infra/)**: Infrastructure as Code (Terraform) and Configuration (Ansible).
@@ -54,14 +54,14 @@ For full setup, CI/CD, and AWS integration, see [docs/runbook.md](./docs/runbook
 - **[docs/](./docs/)**: Comprehensive report and screenshots.
 - **[Jenkinsfile](./Jenkinsfile)**: Root pipeline definition.
 
-## 🛠️ Components
+## Components
 
 - **Prometheus**: Port 9090
 - **Grafana**: Port 3001 (Admin: `admin`/`admin`)
 - **Node Exporter**: Port 9100
 - **Web App**: Port 3000
 
-## 📝 Deliverables Checklist
+## Deliverables Checklist
 
 - [x] `prometheus.yml`
 - [x] Grafana dashboard JSON
