@@ -61,11 +61,13 @@ pipeline {
                 sshagent(['ec2_ssh']) {
                     echo "Deploying to ${params.EC2_PUBLIC_IP} via Ansible"
                     sh """
-                        ansible-playbook -i infra/ansible/inventory.ini infra/ansible/deploy.yml \
-                            -e "TARGET_IP=${params.EC2_PUBLIC_IP}" \
+                        ansible-galaxy collection install community.docker
+                        ansible-playbook infra/ansible/deploy.yml \
+                            -i "${params.EC2_PUBLIC_IP}," \
                             -e "IMAGE_NAME=${DOCKER_IMAGE}:latest" \
                             -e "APP_MESSAGE='${APP_MESSAGE}'" \
                             -e "APP_VERSION='${params.APP_VERSION}'" \
+                            -u ec2-user \
                             --ssh-common-args='-o StrictHostKeyChecking=no'
                     """
                 }
