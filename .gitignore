@@ -1,0 +1,44 @@
+# ========================
+# Terraform
+# ========================
+**/.terraform/
+*.tfstate
+*.tfstate.*
+*.tfplan
+*.tfvars
+!*.tfvars.example
+crash.log
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# ========================
+# Node.js
+# ========================
+node_modules/
+npm-debug.log*
+.env
+.env.*
+
+# ========================
+# Docker
+# ========================
+docker-compose.override.yml
+
+# ========================
+# IDE / OS
+# ========================
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# ========================
+# CI/CD Agent Dirs
+# ========================
+.claude/
+.qodo/
