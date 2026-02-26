@@ -10,7 +10,7 @@ pipeline {
 
     parameters {
         string(name: 'DOCKER_HUB_USER', defaultValue: 'viateur', description: 'Docker Hub Username')
-        string(name: 'DOCKER_HUB_REPO', defaultValue: 'jenkins-simple-web-app', description: 'Docker Hub Repository Name')
+        string(name: 'DOCKER_HUB_REPO', defaultValue: 'jenkins-observability', description: 'Docker Hub Repository Name')
         string(name: 'EC2_PUBLIC_IP', defaultValue: '', description: 'Target EC2 Public IP')
         string(name: 'APP_VERSION', defaultValue: '1.0.0', description: 'Application Version')
     }
