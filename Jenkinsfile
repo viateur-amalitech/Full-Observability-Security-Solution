@@ -53,26 +53,33 @@ pipeline {
                 }
             }
         }
-        stage('Deploy to EC2') {
-            when {
-                expression { params.EC2_PUBLIC_IP != '' }
-            }
-            steps {
-                sshagent(['ec2_ssh']) {
-                    echo "Deploying to ${params.EC2_PUBLIC_IP} via Ansible"
-                    sh """
-                        ansible-galaxy collection install community.docker
-                        ansible-playbook infra/ansible/deploy.yml \
-                            -i "${params.EC2_PUBLIC_IP}," \
-                            -e "IMAGE_NAME=${DOCKER_IMAGE}:latest" \
-                            -e "APP_MESSAGE='${APP_MESSAGE}'" \
-                            -e "APP_VERSION='${params.APP_VERSION}'" \
-                            -u ec2-user \
-                            --ssh-common-args='-o StrictHostKeyChecking=no'
-                    """
-                }
+      stage('Deploy to EC2') {
+    when {
+        expression { params.EC2_PUBLIC_IP != '' }
+    }
+    steps {
+        sshagent(['ec2_ssh']) {
+            script {
+                def cleanIP = params.EC2_PUBLIC_IP
+                    .replace('https://', '')
+                    .replace('http://', '')
+                    .replace('/', '')
+                    .trim()
+                echo "Deploying to ${cleanIP} via Ansible"
+                sh """
+                    ansible-galaxy collection install community.docker
+                    ansible-playbook infra/ansible/deploy.yml \
+                        -i "${cleanIP}," \
+                        -e "IMAGE_NAME=${DOCKER_IMAGE}:latest" \
+                        -e "APP_MESSAGE='${APP_MESSAGE}'" \
+                        -e "APP_VERSION='${params.APP_VERSION}'" \
+                        -u ec2-user \
+                        --ssh-common-args='-o StrictHostKeyChecking=no'
+                """
             }
         }
+    }
+}
     }
     post {
         always {
