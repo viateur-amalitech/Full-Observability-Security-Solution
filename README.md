@@ -33,7 +33,7 @@ For full setup, CI/CD, and AWS integration, see [docs/runbook.md](./docs/runbook
 
 - [Runbook & Setup Guide](./docs/runbook.md)
 - [Implementation Report](./docs/REPORT.md)
-- [Screenshots](./docs/screenshots/)
+- [Screenshots](#screenshots)
 
 
 ## Key Implementations
@@ -45,6 +45,72 @@ For full setup, CI/CD, and AWS integration, see [docs/runbook.md](./docs/runbook
 - **Logging**: Docker logs streamed to AWS CloudWatch.
 - **Security**: AWS CloudTrail (activity auditing) and AWS GuardDuty (threat detection) enabled.
 - **Compliance**: CloudTrail logs stored in encrypted S3 buckets with lifecycle policies.
+
+## Screenshots
+
+This section provides visual documentation of all key components and their functionality:
+
+### 1. Infrastructure & Deployment
+
+#### AWS EC2 Instance
+![EC2 Instance](./docs/screenshots/ec2_instance.png)
+*Shows the deployed EC2 instance running the containerized application with proper security groups and configuration.*
+
+#### Jenkins CI/CD Pipeline
+![Jenkins Pipeline](./docs/screenshots/jenkins.png)
+*Demonstrates the complete CI/CD pipeline with Docker build, test execution, and Ansible deployment stages.*
+
+#### Terraform Apply Process
+![Terraform Apply](./docs/screenshots/approve.png)
+*Shows the infrastructure provisioning process using Terraform with AWS resources creation.*
+
+### 2. Monitoring & Observability
+
+#### Prometheus Metrics Collection
+![Prometheus Targets](./docs/screenshots/prometheus.png)
+*Displays Prometheus scraping configuration with active targets including the web application at `/metrics` endpoint.*
+
+#### Grafana Dashboard - Web App Observability
+![Grafana Dashboard](./docs/screenshots/grafana.png)
+*Shows the comprehensive observability dashboard with:*
+- *Request Latency (p50/p90/p99 percentiles)*
+- *Requests per Second (RPS) metrics*
+- *Error Rate percentage monitoring*
+- *Real-time performance visualization*
+
+### 3. AWS Security & Compliance
+
+#### CloudWatch Logs Integration
+![CloudWatch Logs](./docs/screenshots/cloudwatch.png)
+*Demonstrates Docker container logs streaming to AWS CloudWatch with proper log groups and retention policies.*
+
+### Architecture Overview
+
+The screenshots above demonstrate the complete observability and security stack:
+
+1. **CI/CD Flow**: Code → Jenkins → Docker Hub → EC2 Deployment
+2. **Monitoring Stack**: Application Metrics → Prometheus → Grafana Dashboards
+3. **Security Layer**: CloudTrail Auditing + GuardDuty Threat Detection
+4. **Compliance**: Encrypted S3 storage for audit logs
+
+### Key Metrics Captured
+
+Based on the Grafana dashboard configuration, the following metrics are monitored:
+
+- **Latency Metrics**: `http_request_duration_seconds_bucket`
+  - p50, p90, p99 percentile response times
+- **Throughput Metrics**: `http_requests_total`
+  - Requests per second calculation
+- **Error Metrics**: `http_errors_total`
+  - Error rate percentage (threshold: >5% triggers alerts)
+
+### Access Information
+
+When deployed, access the components at:
+- **Web Application**: `http://<EC2_PUBLIC_IP>` (Port 80)
+- **Prometheus**: `http://<EC2_PUBLIC_IP>:9090`
+- **Grafana**: `http://<EC2_PUBLIC_IP>:3000` (admin/admin)
+- **Application Metrics**: `http://<EC2_PUBLIC_IP>/metrics`
 
 ## Repository Structure
 
