@@ -21,6 +21,16 @@
     owner: ec2-user
     mode: '0755'
 
+- name: Create Grafana provisioning directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: ec2-user
+    mode: '0755'
+  loop:
+    - /home/ec2-user/grafana/provisioning/datasources
+    - /home/ec2-user/grafana/provisioning/dashboards
+
 - name: Copy Prometheus config
   copy:
     dest: /home/ec2-user/prometheus/prometheus.yml
@@ -31,8 +41,20 @@
       scrape_configs:
         - job_name: 'webapp'
           static_configs:
-            - targets: ['web-app:80']
+            - targets: ['web-app:3000']
           metrics_path: '/metrics'
+
+- name: Copy Grafana datasource config
+  copy:
+    dest: /home/ec2-user/grafana/provisioning/datasources/prometheus.yml
+    content: |
+      apiVersion: 1
+      datasources:
+        - name: Prometheus
+          type: prometheus
+          access: proxy
+          url: http://prometheus:9090
+          isDefault: true
 
 - name: Create Docker network for observability
   docker_network:
@@ -78,9 +100,11 @@
     state: started
     restart_policy: unless-stopped
     ports:
-      - "3000:3000"
+      - "3001:3000"
     networks:
       - name: observability
+    volumes:
+      - /home/ec2-user/grafana/provisioning:/etc/grafana/provisioning
     env:
       GF_SECURITY_ADMIN_PASSWORD: "admin"
 
